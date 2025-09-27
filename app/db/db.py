@@ -5,13 +5,16 @@ from models.restaurante import Restaurante
 class DB:
     BANCO = {}
 
-    def __init__(self, adicionar_dados_fake=False):
+    def __init__(self, restaurantes):
+        self.restaurantes = [{
+            "nome: "nome",
+            "Comissão": "comissão",
+            "Endereço": "Endereço"
+        }]
         self.__configurar_tabelas()
 
-
-
     def criar_restaurante(self, restaurante: Restaurante):
-        pass
+        self.restaurantes.append()
 
     def login(self, email: str, senha: str):
         pass

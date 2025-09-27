@@ -1,18 +1,45 @@
 class Restaurante:
+    contador = 0
     def __init__(self, email: str, senha: str, restaurante_nome: str, comissao: int):
+        Restaurante.contador += 1
+        self.pk = Restaurante.contador
         self.email = email
         self.senha = senha
-        ## usar hash de senha(bcrypt)
         self.restaurante_nome = restaurante_nome
         self.comissao = comissao
-
+        
     def __str__(self):
         return f'{self.restaurante_nome}'
     
-    def dicionario(self):
-        return {
-            "email": self.email,
-            "senha": self.senha,
-            "restaurante_nome": self.restaurante_nome,
-            "comissao": self.comissao
-        }
+    @staticmethod
+    def validar_comissao(comissao: int) -> bool:
+        if comissao >= 0:
+            return True
+        return False
+    
+    @staticmethod
+    def validar_email(email: str) -> bool:
+        if email.count('@') != 1:
+            return False
+        elif email.count('.') < 1:
+            return False
+        usuario, dominio = email.split('@')
+        if len(usuario) < 1 or len(dominio) < 3:
+            return False
+        elif ' ' in usuario or ' ' in dominio:
+            return False
+        elif dominio[0] == '.' or dominio[-1] == '.':
+            return False
+        return True
+    
+    @staticmethod
+    def validar_senha(senha: str) -> bool:
+        if len(senha) < 5:
+            return False
+        if not any(caracter.isupper() for caracter in senha):
+            return False    
+        if not any(caracter.islower() for caracter in senha):
+            return False                
+        if not any(caracter.isdigit() for caracter in senha):
+            return False
+        return True

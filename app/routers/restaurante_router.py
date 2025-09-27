@@ -2,11 +2,6 @@ from fastapi import APIRouter
 
 router = APIRouter(prefix="/restaurants", tags=["Restaurantes"])
 
-
-
-
-# RESTAURANTS ROUTER 
-
 # POST /RESTAURANTS 
 @router.post('/')
 def criar_restaurante():
@@ -23,8 +18,8 @@ def deletar_item_menu(item_id: int):
 
 # GET /RESTAURANTS
 @router.get("/")
-def listar_restaurantes():
-    return {"message": "Lista de restaurantes"}
+def listar_restaurantes(email: str = None, senha: str = None):
+    return {"message": "Lista de restaurantes fofineos :3"}
 # PATCH /RESTAURANTS
 @router.patch("/")
 def atualizar_restaurante():
