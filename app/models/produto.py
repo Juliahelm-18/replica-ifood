@@ -10,18 +10,19 @@ class Produto:
 
     def __str__(self):
         return f'{self.nome}'
-
-    def verifica_nome(self, nome: str) -> bool:
-        if len(nome) <= 4:
+    
+    def verifica_nome(self) -> bool:
+        if len(self.nome) <= 4:
             return False
-        elif nome.isdigit():
+        elif self.nome.isdigit():
             return False
         for produto in Produto.produtos_cadastrados:
-            if produto.nome == nome:
+            if produto.nome == self.nome:
                 return False
         return True
-    
-    def verifica_preco(self, preco: float) -> bool:
+
+    @staticmethod
+    def verifica_preco(preco: float) -> bool:
         if preco <= 0:
             return False
         return True

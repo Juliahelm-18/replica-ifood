@@ -3,7 +3,7 @@ class Restaurante:
     def __init__(self, email: str, senha: str, restaurante_nome: str, comissao: int):
         Restaurante.contador += 1
         self.pk = Restaurante.contador
-        self.email = email
+        self.email = email.lower()
         self.senha = senha
         self.restaurante_nome = restaurante_nome
         self.comissao = comissao
@@ -41,5 +41,11 @@ class Restaurante:
         if not any(caracter.islower() for caracter in senha):
             return False                
         if not any(caracter.isdigit() for caracter in senha):
+            return False
+        return True
+
+    @staticmethod
+    def validar_nome(restaurante_nome: str) -> bool:
+        if len(restaurante_nome) < 10:
             return False
         return True

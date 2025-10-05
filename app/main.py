@@ -6,5 +6,5 @@ app = FastAPI(title="Réplica do iFood!")
 app.include_router(restaurante_router)
 
 @app.get("/")
-def raiz():
-    return {"mensagem": "API rodando! 🚀"}
+def read_root():
+    return {"message": "API do Réplica iFood está funcionando!"}
