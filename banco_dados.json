@@ -1,0 +1,12 @@
+{
+    "RESTAURANTES": [
+        {
+            "pk": 1,
+            "email": "j.u.lia@g.mail.com",
+            "senha": "Sabugo12",
+            "restaurante_nome": "cacheoriassa",
+            "comissao": 20.0,
+            "menu": []
+        }
+    ]
+}

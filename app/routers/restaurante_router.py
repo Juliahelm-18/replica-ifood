@@ -9,6 +9,7 @@ database = DATABASE
 # POST /restaurants
 @router.post('/')
 def criar_restaurante(email: str, senha: str, restaurante_nome: str, comissao: float = None):
+    # Cria um novo restaurante.
     novo_restaurante = Restaurante(
         email=email,
         senha=senha,
@@ -47,6 +48,7 @@ def deletar_item_menu(email: str, senha: str, product_id: int):
         return {"message": "Falha ao deletar item, verifique email/senha"}
 
     for i, item in enumerate(restaurante['menu']):
+        # Encontra o produto pelo ID e remove do menu
         if item['pk'] == product_id:
             del restaurante['menu'][i]
             database.salvar_dados()
@@ -57,11 +59,13 @@ def deletar_item_menu(email: str, senha: str, product_id: int):
 # GET /restaurants
 @router.get("/")
 def listar_restaurantes():
+    # Retorna lista de restaurantes ordenada por comissão e nome.
     return {"restaurantes": database.obter_restaurantes()}
 
 # PATCH /restaurants
 @router.patch("/")
 def atualizar_comissao(email: str, senha: str, commission: int):
+    # Atualiza a comissão de um restaurante autenticado.
     restaurante = database.obter_restaurante(email, senha)
     if not restaurante:
         return {"message": "Falha ao atualizar restaurante, verifique email/senha"}

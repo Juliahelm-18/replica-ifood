@@ -12,6 +12,7 @@ class Produto:
         return f'{self.nome}'
     
     def verifica_nome(self) -> bool:
+        # Verifica se o nome do produto é válido.
         if len(self.nome) <= 4:
             return False
         elif self.nome.isdigit():
@@ -23,6 +24,7 @@ class Produto:
 
     @staticmethod
     def verifica_preco(preco: float) -> bool:
+        # Verifica se o preço do produto é válido.
         if preco <= 0:
             return False
         return True
