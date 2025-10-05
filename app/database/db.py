@@ -1,6 +1,7 @@
 # app/database/db.py
 import json
 import os
+from app.models import restaurante
 from app.models.produto import Produto
 from app.models.restaurante import Restaurante
 
@@ -96,24 +97,32 @@ class DB:
     def obter_restaurantes(self):
         """Retorna lista de restaurantes ordenada por comissão e nome."""
         restaurantes = self.BANCO['RESTAURANTES'][:]
-        for c in restaurantes:
-            if 'menu' not in c:
-                c['menu'] = []
+        for rest in restaurantes:
+            if 'menu' not in rest:
+                rest['menu'] = []
 
-        com_comissao = [r for r in restaurantes if r.get('comissao') is not None]
-        sem_comissao = [r for r in restaurantes if r.get('comissao') is None]
+        com_comissao = [r for r in restaurantes if r['comissao'] is not None]
+        sem_comissao = [r for r in restaurantes if r['comissao'] is None]   
 
-        com_comissao.sort(key=lambda r: (r['comissao'], r['restaurante_nome']))
-        sem_comissao.sort(key=lambda r: r['restaurante_nome'])
+        com_comissao.sort(key=ordenar_comissao)
+        sem_comissao.sort(key=ordenar_nome)
         return com_comissao + sem_comissao
+
+    def ordenar_comissao(restaurante):
+        """Função auxiliar para ordenar por comissão e nome.""" 
+        return (restaurante['comissao'], restaurante['restaurante_nome'].lower())
+    
+    def ordenar_nome(restaurante):
+        """Função auxiliar para ordenar por nome."""
+        return restaurante['restaurante_nome'].lower()
 
     def obter_restaurante(self, email: str, senha: str) -> dict | None:
         """Retorna restaurante específico pelo email e senha."""
         email = email.lower()
-        for c in self.BANCO['RESTAURANTES']:
-            if c['email'] == email and c['senha'] == senha:
-                print(f"Login realizado com sucesso. Bem-vindo, {c['restaurante_nome']}!")
-                return c  
+        for rest in self.BANCO['RESTAURANTES']:
+            if rest['email'] == email and rest['senha'] == senha:
+                print(f"Login realizado com sucesso. Bem-vindo, {rest['restaurante_nome']}!")
+                return rest
         print("Email ou senha incorretos.")
         return None
 

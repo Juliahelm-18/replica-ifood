@@ -8,12 +8,12 @@ database = DATABASE
 
 # POST /restaurants
 @router.post('/')
-def criar_restaurante(restaurante: dict):
+def criar_restaurante(email: str, senha: str, restaurante_nome: str, comissao: float = None):
     novo_restaurante = Restaurante(
-        email=restaurante['email'],
-        senha=restaurante['senha'],
-        restaurante_nome=restaurante['restaurante_nome'],
-        comissao=restaurante.get('comissao')
+        email=email,
+        senha=senha,
+        restaurante_nome=restaurante_nome,
+        comissao=comissao
     )
     resultado = database.criar_restaurante(novo_restaurante)
     if resultado:
@@ -22,9 +22,9 @@ def criar_restaurante(restaurante: dict):
 
 # POST /restaurants/menu
 @router.post('/menu')
-def adicionar_item_menu(dados: dict):
-    produto = Produto(nome=dados['nome'], preco=dados['preco'])
-    
+def adicionar_item_menu(email: str, senha: str, nome: str, preco: float):
+    produto = Produto(nome=nome, preco=preco)
+
     # Verifica nome usando método de instância
     if not produto.verifica_nome():
         return {"message": "Falha: nome do produto inválido (mínimo 5 caracteres, não numérico ou já cadastrado)."}

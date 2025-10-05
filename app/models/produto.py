@@ -2,7 +2,7 @@ class Produto:
     contador = 0
     produtos_cadastrados = []
 
-    def __init__(self, nome: str, preco: float):
+    def __init__(self, nome: str, preco: float = None):
         Produto.contador += 1
         self.pk = Produto.contador
         self.nome = nome
