@@ -37,7 +37,7 @@ def adicionar_item_menu(email: str, senha: str, nome: str, preco: float):
 
     sucesso = database.adicionar_produto(email, senha, produto)
     if sucesso:
-        return {"message": f"Produto {produto.nome} adicionado ao menu com sucesso!"}
+        return {"message": f"Produto {produto.nome} adicionado ao menu com sucesso! Sua pk é {produto.pk}."}
 
     return {"message": "Falha ao adicionar produto, verifique email/senha ou produto duplicado no menu."}
 
@@ -52,7 +52,7 @@ def deletar_item_menu(email: str, senha: str, product_id: int):
 
     for i, item in enumerate(restaurante['menu']):
         if item['pk'] == product_id:
-            del restaurante['menu'][i]
+            restaurante['menu'].pop(i)
             database.salvar_dados()
             return {"message": f"Item {item['nome']} deletado do menu com sucesso!"}
 

@@ -91,8 +91,16 @@ class DB:
 
         # Desempata pelo nome
         sem_comissao.sort(key=lambda r: r['restaurante_nome'].lower())
-
-        return com_comissao + sem_comissao
+        # Retorna somente os campos necessários
+        resultado = [
+            {
+                "restaurante_nome": r["restaurante_nome"],
+                "comissao": r["comissao"],
+                "menu": r.get("menu", [])
+            }
+            for r in (com_comissao + sem_comissao)
+        ]
+        return resultado
 
     def obter_restaurante(self, email: str, senha: str) -> dict | None:
         email = email.lower()
