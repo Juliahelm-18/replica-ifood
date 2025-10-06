@@ -1,3 +1,5 @@
+# Classe responsável por armazenar informações dos restaurantes.
+# Também contém metódos de validação para os atributos.
 class Restaurante:
     contador = 0
     def __init__(self, email: str, senha: str, restaurante_nome: str, comissao: int):
@@ -13,14 +15,12 @@ class Restaurante:
     
     @staticmethod
     def validar_comissao(comissao: int) -> bool:
-        # Valida se a comissão é um número não negativo.
         if comissao >= 0:
             return True
         return False
     
     @staticmethod
     def validar_email(email: str) -> bool:
-        # Valida o formato do email.
         if email.count('@') != 1:
             return False
         elif email.count('.') < 1:
@@ -36,7 +36,6 @@ class Restaurante:
     
     @staticmethod
     def validar_senha(senha: str) -> bool:
-        # Valida os critérios de segurança da senha.
         if len(senha) < 5:
             return False
         if not any(caracter.isupper() for caracter in senha):
@@ -49,7 +48,6 @@ class Restaurante:
 
     @staticmethod
     def validar_nome(restaurante_nome: str) -> bool:
-        # Valida se o nome do restaurante é válido.
         if len(restaurante_nome) < 10:
             return False
         return True

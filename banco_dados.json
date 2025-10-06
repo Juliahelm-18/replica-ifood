@@ -7,6 +7,22 @@
             "restaurante_nome": "cacheoriassa",
             "comissao": 20.0,
             "menu": []
+        },
+        {
+            "pk": 1,
+            "email": "claudiomiropinto@icloud.com",
+            "senha": "Jujulinda123",
+            "restaurante_nome": "loura pelada",
+            "comissao": 30.0,
+            "menu": []
+        },
+        {
+            "pk": 2,
+            "email": "loura123@gmail.com",
+            "senha": "Julialinda123",
+            "restaurante_nome": "loura pelada",
+            "comissao": 40,
+            "menu": []
         }
     ]
 }

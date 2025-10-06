@@ -9,7 +9,8 @@ database = DATABASE
 # POST /restaurants
 @router.post('/')
 def criar_restaurante(email: str, senha: str, restaurante_nome: str, comissao: float = None):
-    # Cria um novo restaurante.
+    # Função responsável por criar um novo restaurante no sistema.
+    # Recebe os dados do restaurante, instancia um objeto Restaurante e o envia para o banco de dados.
     novo_restaurante = Restaurante(
         email=email,
         senha=senha,
@@ -24,17 +25,17 @@ def criar_restaurante(email: str, senha: str, restaurante_nome: str, comissao: f
 # POST /restaurants/menu
 @router.post('/menu')
 def adicionar_item_menu(email: str, senha: str, nome: str, preco: float):
+    # Função responsável por adicionar um novo produto ao menu de um restaurante.
+    # Valida o nome e o preço do produto antes de cadastrá-lo.
     produto = Produto(nome=nome, preco=preco)
 
-    # Verifica nome usando método de instância
     if not produto.verifica_nome():
         return {"message": "Falha: nome do produto inválido (mínimo 5 caracteres, não numérico ou já cadastrado)."}
     
-    # Verifica preço usando método estático
     if not Produto.verifica_preco(produto.preco):
         return {"message": "Falha: preço do produto inválido (deve ser > 0)."}
 
-    sucesso = database.adicionar_produto(dados['email'], dados['senha'], produto)
+    sucesso = database.adicionar_produto(email, senha, produto)
     if sucesso:
         return {"message": f"Produto {produto.nome} adicionado ao menu com sucesso!"}
 
@@ -43,12 +44,13 @@ def adicionar_item_menu(email: str, senha: str, nome: str, preco: float):
 # DELETE /restaurants/menu
 @router.delete('/menu')
 def deletar_item_menu(email: str, senha: str, product_id: int):
+    # Função responsável por remover um produto do menu de um restaurante.
+    # Verifica as credenciais do restaurante (email e senha) e busca o item pelo ID.
     restaurante = database.obter_restaurante(email, senha)
     if not restaurante or 'menu' not in restaurante:
         return {"message": "Falha ao deletar item, verifique email/senha"}
 
     for i, item in enumerate(restaurante['menu']):
-        # Encontra o produto pelo ID e remove do menu
         if item['pk'] == product_id:
             del restaurante['menu'][i]
             database.salvar_dados()
